@@ -79,6 +79,21 @@ content:
       name: Gantry Instrument
       type: Instrument
       description: Gantry instrument allows motion in XZ axis
-    endpoint: modules/instrument
     api:
-      endpoint:
+      endpoint: gantry/
+      services:
+        goto/:
+          post:
+            summary: Go to the position requested
+            timeout: 20s
+            parameters:
+              - name: x
+                type: uint
+                description: ...
+              - name: y
+                type: uint
+                description: ...
+              - name: z
+                type: uint
+                description: ...
+

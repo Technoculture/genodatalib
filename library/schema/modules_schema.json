@@ -4,7 +4,9 @@
   "type": "object",
   "required": [
     "content",
+    "description",
     "endpoint",
+    "title",
     "version"
   ],
   "properties": {
@@ -14,20 +16,26 @@
         "$ref": "#/definitions/Module"
       }
     },
+    "description": {
+      "type": "string"
+    },
     "endpoint": {
+      "type": "string"
+    },
+    "title": {
       "type": "string"
     },
     "version": {
       "type": "string"
     }
   },
+  "additionalProperties": false,
   "definitions": {
     "API": {
       "type": "object",
       "required": [
         "endpoint",
-        "services",
-        "variables"
+        "services"
       ],
       "properties": {
         "endpoint": {
@@ -40,12 +48,16 @@
           }
         },
         "variables": {
-          "type": "object",
+          "type": [
+            "object",
+            "null"
+          ],
           "additionalProperties": {
             "type": "string"
           }
         }
-      }
+      },
+      "additionalProperties": false
     },
     "Module": {
       "type": "object",
@@ -60,7 +72,8 @@
         "info": {
           "$ref": "#/definitions/ModuleInfo"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "ModuleInfo": {
       "type": "object",
@@ -79,7 +92,8 @@
         "type": {
           "type": "string"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "RequestSchema": {
       "type": "object",
@@ -112,13 +126,23 @@
         "timeout": {
           "type": "string"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "Service": {
       "type": "object",
       "additionalProperties": {
         "$ref": "#/definitions/RequestSchema"
       }
+    },
+    "Unit": {
+      "type": "string",
+      "enum": [
+        "C",
+        "ms",
+        "s",
+        "m"
+      ]
     },
     "ValueSchema": {
       "type": "object",
@@ -136,8 +160,19 @@
         },
         "type": {
           "type": "string"
+        },
+        "unit": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Unit"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
-      }
+      },
+      "additionalProperties": false
     }
   }
 }

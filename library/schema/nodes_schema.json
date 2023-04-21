@@ -4,6 +4,8 @@
   "type": "object",
   "required": [
     "content",
+    "description",
+    "title",
     "version"
   ],
   "properties": {
@@ -13,10 +15,17 @@
         "$ref": "#/definitions/KnownNode"
       }
     },
+    "description": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
     "version": {
       "type": "string"
     }
   },
+  "additionalProperties": false,
   "definitions": {
     "KnownNode": {
       "type": "object",
@@ -42,7 +51,8 @@
             }
           ]
         }
-      }
+      },
+      "additionalProperties": false
     },
     "NodeType": {
       "type": "string",
@@ -77,7 +87,8 @@
             "type": "string"
           }
         }
-      }
+      },
+      "additionalProperties": false
     }
   }
 }

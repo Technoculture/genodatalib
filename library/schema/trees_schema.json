@@ -29,6 +29,7 @@
       "type": "string"
     }
   },
+  "additionalProperties": false,
   "definitions": {
     "Node": {
       "type": "object",
@@ -63,7 +64,8 @@
         "name": {
           "type": "string"
         }
-      }
+      },
+      "additionalProperties": false
     }
   }
 }

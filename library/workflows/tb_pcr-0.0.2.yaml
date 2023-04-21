@@ -1,47 +1,47 @@
 description: Conduct a PCR based test on a human blood sample for infectious disease
   for TB
 parameters:
-- description: '...'
+- description: ...
   name: annealing_temp
   type: float
   unit: C
   value: 0.0
-- description: '...'
+- description: ...
   name: annealing_duration
   type: float
   unit: s
   value: 2
-- description: '...'
+- description: ...
   name: annealing_temp
   type: float
   unit: C
   value: 0.0
-- description: '...'
+- description: ...
   name: annealing_duration
   type: float
   unit: s
   value: 2
-- description: '...'
+- description: ...
   name: annealing_temp
   type: float
   unit: C
   value: 0.0
-- description: '...'
+- description: ...
   name: annealing_duration
   type: float
   unit: s
   value: 2
-- description: '...'
+- description: ...
   name: annealing_temp
   type: float
   unit: C
   value: 0.0
-- description: '...'
+- description: ...
   name: annealing_duration
   type: float
   unit: s
   value: 2
-process_tldr: '...'
+process_tldr: ...
 title: TB PCR
 version: 0.0.2
 workflow:

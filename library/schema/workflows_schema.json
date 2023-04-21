@@ -4,12 +4,23 @@
   "type": "object",
   "required": [
     "description",
+    "parameters",
+    "process_tldr",
     "title",
     "version",
     "workflow"
   ],
   "properties": {
     "description": {
+      "type": "string"
+    },
+    "parameters": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Value"
+      }
+    },
+    "process_tldr": {
       "type": "string"
     },
     "title": {
@@ -25,7 +36,52 @@
       }
     }
   },
+  "additionalProperties": false,
   "definitions": {
+    "Unit": {
+      "type": "string",
+      "enum": [
+        "C",
+        "ms",
+        "s",
+        "m"
+      ]
+    },
+    "Value": {
+      "type": "object",
+      "required": [
+        "description",
+        "name",
+        "type",
+        "value"
+      ],
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "unit": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Unit"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "value": {
+          "type": "number",
+          "format": "double"
+        }
+      },
+      "additionalProperties": false
+    },
     "WorkflowStep": {
       "type": "object",
       "required": [
@@ -39,7 +95,8 @@
         "why": {
           "type": "string"
         }
-      }
+      },
+      "additionalProperties": false
     }
   }
 }
