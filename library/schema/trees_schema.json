@@ -1,0 +1,69 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "BehaviorTreeFile",
+  "type": "object",
+  "required": [
+    "description",
+    "participant_modules",
+    "title",
+    "tree",
+    "version"
+  ],
+  "properties": {
+    "description": {
+      "type": "string"
+    },
+    "participant_modules": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "title": {
+      "type": "string"
+    },
+    "tree": {
+      "$ref": "#/definitions/Node"
+    },
+    "version": {
+      "type": "string"
+    }
+  },
+  "definitions": {
+    "Node": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "children": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/definitions/Node"
+          }
+        },
+        "error": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "fallback": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/definitions/Node"
+          }
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

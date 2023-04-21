@@ -1,0 +1,83 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "KnownNodesFile",
+  "type": "object",
+  "required": [
+    "content",
+    "version"
+  ],
+  "properties": {
+    "content": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/KnownNode"
+      }
+    },
+    "version": {
+      "type": "string"
+    }
+  },
+  "definitions": {
+    "KnownNode": {
+      "type": "object",
+      "required": [
+        "description",
+        "type"
+      ],
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/definitions/NodeType"
+        },
+        "zenoh": {
+          "default": null,
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Zenoh"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "NodeType": {
+      "type": "string",
+      "enum": [
+        "condition",
+        "action",
+        "sequence",
+        "error"
+      ]
+    },
+    "ReplyMode": {
+      "type": "string",
+      "enum": [
+        "any",
+        "all",
+        "one"
+      ]
+    },
+    "Zenoh": {
+      "type": "object",
+      "required": [
+        "min_reply",
+        "modules"
+      ],
+      "properties": {
+        "min_reply": {
+          "$ref": "#/definitions/ReplyMode"
+        },
+        "modules": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

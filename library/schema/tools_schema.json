@@ -1,0 +1,73 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ToolFile",
+  "type": "object",
+  "required": [
+    "content",
+    "version"
+  ],
+  "properties": {
+    "content": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/Tool"
+      }
+    },
+    "version": {
+      "type": "string"
+    }
+  },
+  "definitions": {
+    "Tool": {
+      "type": "object",
+      "required": [
+        "description",
+        "name"
+      ],
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "pick_up": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "variants": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/definitions/Variant"
+          }
+        }
+      }
+    },
+    "Variant": {
+      "type": "object",
+      "required": [
+        "name",
+        "preffered_when"
+      ],
+      "properties": {
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "name": {
+          "type": "string"
+        },
+        "preffered_when": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

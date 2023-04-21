@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "WorkflowFile",
+  "type": "object",
+  "required": [
+    "description",
+    "title",
+    "version",
+    "workflow"
+  ],
+  "properties": {
+    "description": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "workflow": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/WorkflowStep"
+      }
+    }
+  },
+  "definitions": {
+    "WorkflowStep": {
+      "type": "object",
+      "required": [
+        "name",
+        "why"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "why": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
