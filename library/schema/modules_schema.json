@@ -1,0 +1,143 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ModuleFile",
+  "type": "object",
+  "required": [
+    "content",
+    "endpoint",
+    "version"
+  ],
+  "properties": {
+    "content": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/Module"
+      }
+    },
+    "endpoint": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    }
+  },
+  "definitions": {
+    "API": {
+      "type": "object",
+      "required": [
+        "endpoint",
+        "services",
+        "variables"
+      ],
+      "properties": {
+        "endpoint": {
+          "type": "string"
+        },
+        "services": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/Service"
+          }
+        },
+        "variables": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "Module": {
+      "type": "object",
+      "required": [
+        "api",
+        "info"
+      ],
+      "properties": {
+        "api": {
+          "$ref": "#/definitions/API"
+        },
+        "info": {
+          "$ref": "#/definitions/ModuleInfo"
+        }
+      }
+    },
+    "ModuleInfo": {
+      "type": "object",
+      "required": [
+        "description",
+        "name",
+        "type"
+      ],
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        }
+      }
+    },
+    "RequestSchema": {
+      "type": "object",
+      "required": [
+        "summary",
+        "timeout"
+      ],
+      "properties": {
+        "parameters": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/definitions/ValueSchema"
+          }
+        },
+        "response": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/definitions/ValueSchema"
+          }
+        },
+        "summary": {
+          "type": "string"
+        },
+        "timeout": {
+          "type": "string"
+        }
+      }
+    },
+    "Service": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/RequestSchema"
+      }
+    },
+    "ValueSchema": {
+      "type": "object",
+      "required": [
+        "description",
+        "name",
+        "type"
+      ],
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

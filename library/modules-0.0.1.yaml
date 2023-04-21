@@ -13,7 +13,7 @@ content:
       endpoint: tip_rm/{ID}/
       variables:
         ID: uint
-      paths:
+      services:
         count/:
           get:
             summary: Respond with the counts of tips as well as tip boxes
@@ -34,42 +34,45 @@ content:
               - name: used_tip_box_count
                 type: uint
                 description: ...
-          book_tip/:
-            post:
-              summary: If tip is available, book a tip for the given sample and do not use use it otherwise
-              timeout: 1s
-              parameter:
-                - name: count
-                  type: uint
-                  description: ...
-              response:
-                - name: confirmation
-                  type: bool
-                  description: ...
-          discard_active_tray/:
-            post:
-              summary: ...
-              timeout: 5m
-              response:
-                - name: confirmation
-                  type: bool
-                  description: ...
-          load_next_tray/:
-            post:
-              summary: ...
-              timeout: 5m
-              response:
-                - name: confirmation
-                  type: bool
-          get_booked_tip/:
-            post:
-              summary: moves the slider of the Tip RM to a location and responds with the location for the gantry to pick up the tip form
-              timeout: 5m
-              response:
-                - name: x
-                  type: float
-                - name: z
-                  type: float
+        book_tip/:
+          post:
+            summary: If tip is available, book a tip for the given sample and do not use use it otherwise
+            timeout: 1s
+            parameters:
+              - name: count
+                type: uint
+                description: ...
+            response:
+              - name: confirmation
+                type: bool
+                description: ...
+        discard_active_tray/:
+          post:
+            summary: ...
+            timeout: 5m
+            response:
+              - name: confirmation
+                type: bool
+                description: ...
+        load_next_tray/:
+          post:
+            summary: ...
+            timeout: 5m
+            response:
+              - name: confirmation
+                type: bool
+                description: ...
+        get_booked_tip/:
+          post:
+            summary: moves the slider of the Tip RM to a location and responds with the location for the gantry to pick up the tip form
+            timeout: 5m
+            response:
+              - name: x
+                type: float
+                description: ...
+              - name: z
+                type: float
+                description: ...
 
   Gantry:
     info:
@@ -77,4 +80,5 @@ content:
       type: Instrument
       description: Gantry instrument allows motion in XZ axis
     endpoint: modules/instrument
-
+    api:
+      endpoint:
