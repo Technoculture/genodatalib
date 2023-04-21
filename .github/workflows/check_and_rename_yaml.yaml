@@ -24,7 +24,19 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install pyyaml packaging
+      
+      # Run the reformat action
+      - name: Reformat YAML Files
+        uses: credfeto/action-yaml-format@v1.3.2
 
       - name: Check and rename YAML files
         run: |
           python check_and_rename_yaml.py
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "github-actions@github.com"
+          git add -A
+          git diff --quiet && git diff --staged --quiet || git commit -m "Bump version by check_and_rename_yaml action"
+          git push
