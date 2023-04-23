@@ -22,6 +22,12 @@
     "endpoint": {
       "type": "string"
     },
+    "file_name": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
     "title": {
       "type": "string"
     },

@@ -1,9 +1,16 @@
+#!/usr/bin/env python3
+
 import os
 import re
 import yaml
 from packaging.version import Version, InvalidVersion
 from yaml.parser import ParserError
 from yaml.scanner import ScannerError
+
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
 
 class InvalidYamlFileError(Exception):
     pass
@@ -36,13 +43,11 @@ def validate_name(name, file_path):
     if not re.match(r'^\w+$', name):
         raise InvalidNameError(f"Invalid name/title: {name} in YAML file: {file_path}. Only alphanumeric characters and underscores are allowed.")
 
-
 def validate_version(version, file_path):
     try:
         Version(version)
     except InvalidVersion:
         raise InvalidVersionError(f"Invalid version: {version} in YAML file: {file_path}. Must be a valid SemVer.")
-
 
 def check_name_version(content, file_path):
     if content is None:
@@ -58,37 +63,39 @@ def check_name_version(content, file_path):
     validate_name(name, file_path)
     validate_version(version, file_path)
 
+    logger.debug(name)
+
     return name, version
 
-def process_yaml_file(file_path, file_pattern):
+def process_yaml_file(file_path, independent_file_pattern, common_pattern):
     content = load_yaml_file(file_path)
-    name, version = check_name_version(content, file_path)
+    name, _ = check_name_version(content, file_path)
     filename = os.path.basename(file_path)
 
-    match = file_pattern.match(filename)
-    if not match or match.group(1) != name or match.group(2) != version:
-        new_file_name = f"{name}-{version}.yaml"
+    match = independent_file_pattern.match(filename) or common_pattern.match(filename)
+    logger.debug(match)
+
+    if not match:
+        if name in ["nodes", "modules", "tools"]:
+            new_file_name = f"{name}.lib.yaml"
+        elif content.get('type') == "tree":
+            new_file_name = f"{name}.tree.yaml"
+        elif content.get('type') == "workflow":
+            new_file_name = f"{name}.wflow.yaml"
+        elif content.get('type') == "lut":
+            new_file_name = f"{name}.lut.yaml"
+        else:
+            raise InvalidNameError(f"Invalid name/title: {name} in YAML file: {file_path}. The file name does not match the required pattern.")
+
         new_file_path = os.path.join(os.path.dirname(file_path), new_file_name)
         os.rename(file_path, new_file_path)
-        print(f"Renamed {file_path} to {new_file_path}")
-
-        # Bump minor version if there are changes
-        current_version = Version(version)
-        bumped_version = f"{current_version.release[0]}.{current_version.release[1]}.{current_version.release[2] + 1}"
-        content['version'] = bumped_version
-
-        # Rename the file with bumped version
-        bumped_file_name = f"{name}-{bumped_version}.yaml"
-        bumped_file_path = os.path.join(os.path.dirname(file_path), bumped_file_name)
-        os.rename(new_file_path, bumped_file_path)
-        print(f"Bumped version and renamed {new_file_path} to {bumped_file_path}")
-
-        # Update the version in the YAML content
-        with open(bumped_file_path, 'w') as f:
-            yaml.safe_dump(content, f)
+        logger.debug(f"Renamed {file_path} to {new_file_path}")
 
 def check_and_rename_yaml(root_dir):
-    file_pattern = re.compile(r'^(.+)-(\d+\.\d+\.\d+)\.yaml$')
+    independent_file_pattern = re.compile(r'^(.+)\.(tree|lut|wflow)\.yaml$')
+    common_pattern = re.compile(r'^(nodes|modules|tools)\.lib\.yaml$')
+
+    common_files = {"nodes.lib.yaml": 0, "modules.lib.yaml": 0, "tools.lib.yaml": 0}
 
     for folder, _, files in os.walk(root_dir):
         # Skip everything in the .github folder
@@ -98,7 +105,13 @@ def check_and_rename_yaml(root_dir):
         for file in files:
             if is_yaml_file(file):
                 file_path = os.path.join(folder, file)
-                process_yaml_file(file_path, file_pattern)
+                process_yaml_file(file_path, independent_file_pattern, common_pattern)
+                if file in common_files:
+                    common_files[file] += 1
+
+    for common_file, count in common_files.items():
+        if count != 1:
+            raise Exception(f"Exactly one {common_file} is required, but found {count}.")
 
 if __name__ == "__main__":
     root_dir = os.path.dirname(os.path.abspath(__file__))

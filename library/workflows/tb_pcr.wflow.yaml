@@ -45,6 +45,6 @@ process_tldr: ...
 title: TB PCR
 version: 0.0.2
 workflow:
-- name: attempt_pickup_tip
+- name: get_tip
   why: We need a tip in order to pick up the sample and move it to DNA extraction
     stage

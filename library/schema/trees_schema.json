@@ -13,6 +13,12 @@
     "description": {
       "type": "string"
     },
+    "file_name": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
     "participant_modules": {
       "type": "array",
       "items": {
@@ -34,38 +40,84 @@
     "Node": {
       "type": "object",
       "required": [
-        "name"
+        "name",
+        "step_number"
       ],
       "properties": {
-        "children": {
-          "type": [
-            "array",
-            "null"
-          ],
-          "items": {
-            "$ref": "#/definitions/Node"
-          }
-        },
         "error": {
           "type": [
             "string",
             "null"
           ]
         },
-        "fallback": {
-          "type": [
-            "array",
-            "null"
-          ],
-          "items": {
-            "$ref": "#/definitions/Node"
-          }
-        },
         "name": {
           "type": "string"
+        },
+        "sequence": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Sequence"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "step_number": {
+          "type": "integer",
+          "format": "uint8",
+          "minimum": 0.0
         }
       },
       "additionalProperties": false
+    },
+    "Sequence": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "content",
+            "type"
+          ],
+          "properties": {
+            "content": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Node"
+              }
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "children"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "content",
+            "type"
+          ],
+          "properties": {
+            "content": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Node"
+              }
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "fallback"
+              ]
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
     }
   }
 }
