@@ -9,40 +9,58 @@ tree:
   name: get_tip
   step_number: 1
   sequence:
-    type: children
-    content:
-      - name: is_tip_available
-        step_number: 1
-        error: tip_stock_error
+    !children
+    - name: is_tip_available
+      step_number: 1
+      error: tip_stock_error
 
-  #- name: prepare_tip_for_pickup
-  #  children:
-  #  - fallback:
-  #    - children:
-  #      - error: tray_maintainance_error
-  #        name: is_discard_success
-  #      name: discard_current_tray
-  #    - children:
-  #      - name: move_slider_to_load_position
-  #      - name: load_next_tray
-  #      name: load_new_tray
-  #    - error: load_new_tray_maintainance_error
-  #      name: is_load_new_tray_successful
-  #    name: is_tip_available_in_tray
-  #  - children:
-  #    - name: is_already_in_position
-  #    - name: move_tip_slider_to_position
-  #    - error: tray_maintainance_error
-  #      name: is_slider_position_reached
-  #    name: position_tip_slider
-  #  
-  #- children:
-  #  - name: pickup_tip_using_gantry
-  #  - fallback:
-  #    - children:
-  #      - name: goto_discard_position
-  #      - name: prepare_to_discard
-  #      - name: eject_tip
-  #      - error: handle_pickup_failure
-  #        name: is_discard_tip_successful
-  #      name: discard_tip
+    - name: prepare_tip_for_pickup
+      step_number: 2
+      sequence: 
+        !fallback
+        - name: is_discard_success
+          step_number: 1
+          error: tray_maintainance_error
+        - name: discard_current_tray
+          step_number: 2
+          sequence:
+            !children
+            - name: move_slider_to_load_position
+              step_number: 1
+            - name: load_next_tray
+              step_number: 2
+                # - name: load_new_tray
+                #   step_number: 3
+                #   error: load_new_tray_maintainance_error
+        - name: is_load_new_tray_successful
+          step_number: 4
+        - name: is_tip_available_in_tray
+          step_number: 5
+          sequence:
+            !children
+            - name: is_already_in_position
+              step_number: 1
+            - name: move_tip_slider_to_position
+              step_number: 2
+            - name: is_slider_position_reached
+              step_number: 3
+              error: tray_maintainance_error
+      
+    - name: pickup_tip_using_gantry
+      step_number: 2
+      sequence:
+        !children
+        - name: discard_tip
+          step_number: 1
+          sequence: 
+            !fallback
+            - name: goto_discard_position
+              step_number: 1
+            - name: prepare_to_discard
+              step_number: 2
+            - name: eject_tip
+              step_number: 3
+            - name: is_discard_tip_successful
+              step_number: 4
+              error: handle_pickup_failure
+
