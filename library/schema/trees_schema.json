@@ -76,21 +76,14 @@
         {
           "type": "object",
           "required": [
-            "content",
-            "type"
+            "children"
           ],
           "properties": {
-            "content": {
+            "children": {
               "type": "array",
               "items": {
                 "$ref": "#/definitions/Node"
               }
-            },
-            "type": {
-              "type": "string",
-              "enum": [
-                "children"
-              ]
             }
           },
           "additionalProperties": false
@@ -98,21 +91,14 @@
         {
           "type": "object",
           "required": [
-            "content",
-            "type"
+            "fallback"
           ],
           "properties": {
-            "content": {
+            "fallback": {
               "type": "array",
               "items": {
                 "$ref": "#/definitions/Node"
               }
-            },
-            "type": {
-              "type": "string",
-              "enum": [
-                "fallback"
-              ]
             }
           },
           "additionalProperties": false
