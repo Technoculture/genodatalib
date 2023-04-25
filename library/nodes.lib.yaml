@@ -69,7 +69,7 @@ content:
 
   move_tip_slider_to_position:
     type: action
-    zenoh: 
+    zenoh:
       modules:
         - TipRM
       min_reply: one
@@ -108,7 +108,8 @@ content:
     zenoh:
       modules:
         - Pipette
-      min_reply: one
+      min_reply:
+        one
         #input_variable: active_pipette
     description: There is an error related to to stock / inventory
 
@@ -136,4 +137,3 @@ content:
         - TipRM
       min_reply: any
     description: ...
-

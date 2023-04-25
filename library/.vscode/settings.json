@@ -1,0 +1,23 @@
+{
+  //"yaml.schemaStore.url": "https://raw.githubusercontent.com/TechnocultureResearch/genodatalib/dev/library/schema/schemastore/catalog.json",
+  "yaml.schemaStore.enable": false,
+  "yaml.completion": true,
+  "yaml.format.enable": true,
+  "yaml.schemas": {
+    "https://raw.githubusercontent.com/TechnocultureResearch/genodatalib/dev/library/schema/modules_schema.json": [
+      "/modules.lib.yaml",
+    ],
+    "https://raw.githubusercontent.com/TechnocultureResearch/genodatalib/dev/library/schema/nodes_schema.json": [
+      "/nodes.lib.yaml",
+    ],
+    "https://raw.githubusercontent.com/TechnocultureResearch/genodatalib/dev/library/schema/tools_schema.json": [
+      "/tools.lib.yaml",
+    ],
+    "https://raw.githubusercontent.com/TechnocultureResearch/genodatalib/dev/library/schema/trees_schema.json": [
+      "/*.tree.yaml",
+    ],
+    "https://raw.githubusercontent.com/TechnocultureResearch/genodatalib/dev/library/schema/workflows_schema.json": [
+      "/*.wflow.yaml",
+    ]
+  }
+}
