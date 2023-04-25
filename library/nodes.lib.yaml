@@ -39,10 +39,6 @@ content:
       min_reply: one
     description: There is an error related to to stock / inventory
 
-  tray_maintainance_error:
-    type: error
-    description: There is an error related to to stock / inventory
-
   move_slider_to_load_position:
     type: action
     zenoh:
