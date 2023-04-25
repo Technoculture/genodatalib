@@ -17,7 +17,7 @@
       "/*.tree.yaml",
     ],
     "https://raw.githubusercontent.com/TechnocultureResearch/genodatalib/dev/library/schema/workflows_schema.json": [
-      "/*.wflow.yaml",
+      "*.wflow.yaml",
     ]
-  }
+  },
 }
