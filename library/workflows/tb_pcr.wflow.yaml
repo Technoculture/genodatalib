@@ -1,5 +1,5 @@
 process_tldr: ...
-title: TB PCR
+title: tb_pcr
 version: 0.0.2
 description:
   Conduct a PCR based test on a human blood sample for infectious disease
